@@ -1,0 +1,6 @@
+# Disable end-of-line normalization regardless of core.autocrlf preference
+* -text
+
+# Enable Unity Smart Merge
+*.prefab eol=lf merge=unity-yaml-merge-2022.3.45f1
+*.unity eol=lf merge=unity-yaml-merge-2022.3.45f1

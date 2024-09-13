@@ -1,0 +1,12 @@
+/Build/
+/Library/
+/[Oo]bj/
+/Logs/
+/Temp/
+/UserSettings/
+
+.vs/
+*.user
+/*.sln
+/*.csproj
+/Assets/Plugins/Editor/JetBrains*
