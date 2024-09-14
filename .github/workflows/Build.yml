@@ -1,0 +1,63 @@
+name: Build
+on:
+  push:
+    branches: ['main']
+  pull_request:
+  workflow_dispatch:
+concurrency:
+  group: build
+  cancel-in-progress: true
+permissions:
+  # Both required by actions/deploy-pages
+  pages: write
+  id-token: write
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      # ----------------------------------------------------------------------- Checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ----------------------------------------------------------------------- Restore library cache
+      - name: Restore library cache
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**')}}
+          restore-keys: |
+            Library-
+
+      # ----------------------------------------------------------------------- Build
+      - name: Build
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{secrets.UNITY_LICENSE}}
+          UNITY_EMAIL: ${{secrets.UNITY_EMAIL}}
+          UNITY_PASSWORD: ${{secrets.UNITY_PASSWORD}}
+        with:
+          targetPlatform: WebGL
+          buildsPath: Build
+          # Using slightly older verison until https://github.com/game-ci/docker/issues/250 is resolved
+          unityVersion: 2022.3.42f1
+
+      # ----------------------------------------------------------------------- Collect artifacts
+      - name: Collect build
+        uses: actions/upload-artifact@v4
+        with:
+          name: Build-WebGL
+          if-no-files-found: error
+          path: Build/WebGL/WebGL/
+
+      - name: Collect GitHub Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: Build/WebGL/WebGL/
+
+      # ----------------------------------------------------------------------- Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/deploy-pages@v4
+
