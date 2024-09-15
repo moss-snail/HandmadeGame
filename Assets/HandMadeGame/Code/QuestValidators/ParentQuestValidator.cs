@@ -16,11 +16,11 @@ public sealed class ParentQuestValidator : QuestValidatorBase
                 otherItemCount++;
         }
 
-        if (softItemCount < 3)
-            return PuzzleOutcome.NotEnoughItems;
-
         if (otherItemCount > 0)
             return PuzzleOutcome.WrongItemsPresent;
+
+        if (softItemCount < 3)
+            return PuzzleOutcome.NotEnoughItems;
 
         return PuzzleOutcome.Perfect;
     }

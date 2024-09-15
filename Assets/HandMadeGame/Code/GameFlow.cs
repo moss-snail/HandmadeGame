@@ -133,7 +133,6 @@ public sealed class GameFlow : MonoBehaviour
             Instance = null;
     }
 
-#if DEBUG
     private void OnGUI()
     {
         if (!ShowDebugger)
@@ -159,5 +158,4 @@ public sealed class GameFlow : MonoBehaviour
         }
         GUILayout.EndArea();
     }
-#endif
 }
