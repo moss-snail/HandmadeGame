@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 190791637}
   - component: {fileID: 190791635}
   - component: {fileID: 190791638}
+  - component: {fileID: 190791639}
   m_Layer: 3
   m_Name: GarbageNest
   m_TagString: Untagged
@@ -223,6 +224,18 @@ MonoBehaviour:
     could keep it on one side?
   CurrentState: 0
   SpawnOnAccept: []
+--- !u!114 &190791639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190791634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2773536b55441f47a9700cbfe4cf641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &198687785
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,6 +1341,7 @@ GameObject:
   - component: {fileID: 1271982232}
   - component: {fileID: 1271982230}
   - component: {fileID: 1271982233}
+  - component: {fileID: 1271982234}
   m_Layer: 3
   m_Name: ChristmasNest
   m_TagString: Untagged
@@ -1418,6 +1432,18 @@ MonoBehaviour:
     I won\u2019t have room for presents!"
   CurrentState: 0
   SpawnOnAccept: []
+--- !u!114 &1271982234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271982229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 992c34c71172fc146a695bdf1f262f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1324917085
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,6 +2525,7 @@ GameObject:
   - component: {fileID: 2028315792}
   - component: {fileID: 2028315791}
   - component: {fileID: 2028315790}
+  - component: {fileID: 2028315793}
   m_Layer: 3
   m_Name: ParentNest
   m_TagString: Untagged
@@ -2587,6 +2614,18 @@ Transform:
   - {fileID: 434635303}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2028315793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2028315789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302b272c558d30c43a3d2faafcccbe72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2146245461
 GameObject:
   m_ObjectHideFlags: 0
@@ -2655,6 +2694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsChristmas: 0
+  IsChristmasTree: 0
   IsGarbage: 0
   IsSoft: 0
 --- !u!1660057539 &9223372036854775807

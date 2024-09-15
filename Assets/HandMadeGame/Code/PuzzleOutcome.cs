@@ -1,6 +1,7 @@
 public enum PuzzleOutcome
 {
-    Pefect,
+    Perfect,
     WrongItemsPresent,
     NotEnoughItems,
+    IncorrectPlacement,
 }
