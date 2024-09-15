@@ -15,23 +15,21 @@ public sealed class PlayerInteraction : MonoBehaviour
 
     private Collider CurrentFocus;
 
+    private bool Suppressed;
+
     private void OnDrawGizmosSelected()
         => Gizmos.DrawWireSphere(InteractionCenterGlobal, InteractionRadius);
 
-    private bool _Suppressed;
-    public bool Suppressed
+    private void Awake()
     {
-        get => _Suppressed;
-        set
+        DialogueController.DialogueStart += () =>
         {
-            _Suppressed = value;
+            Suppressed = true;
+            CurrentFocus = null;
+            ControllerPrompt.Hide();
+        };
 
-            if (value)
-            {
-                CurrentFocus = null;
-                ControllerPrompt.Hide();
-            }
-        }
+        DialogueController.DialogueEnd += () => Suppressed = false;
     }
 
     private Collider[] _Colliders = new Collider[8];

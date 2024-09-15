@@ -15,8 +15,13 @@ public sealed class DialogueController : MonoBehaviour
 
     private static Action NoOp = () => { };
 
+    /// <summary>Fires when a new dialogue session starts</summary>
+    public static event Action DialogueStart;
+    /// <summary>Fires when a dialogue session ends</summary>
+    public static event Action DialogueEnd;
+
     private void Awake()
-        => EndDialogue();
+        => gameObject.SetActive(false);
 
     private void Start()
     {
@@ -24,42 +29,54 @@ public sealed class DialogueController : MonoBehaviour
         NoButton.onClick.AddListener(() => HandleAction(NoAction));
     }
 
-    private void StartDialogue(Sprite portrait, string message, bool showButtons)
+    private bool _DialogueWasJustShown = false;
+    private void ShowDialogue(Sprite portrait, string message, bool showButtons)
     {
         Portrait.sprite = portrait;
         DialogueText.text = message;
 
         YesButton.gameObject.SetActive(showButtons);
         NoButton.gameObject.SetActive(showButtons);
-        gameObject.SetActive(true);
+
+        _DialogueWasJustShown = true;
+
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+            DialogueStart?.Invoke();
+        }
     }
 
-    public void StartDialogue(Sprite portrait, string message, Action advanceAction)
+    public void ShowDialogue(Sprite portrait, string message, Action advanceAction)
     {
         YesAction = NoAction = null;
         AdvanceAction = advanceAction;
-        StartDialogue(portrait, message, false);
+        ShowDialogue(portrait, message, false);
     }
 
-    public void StartDialogue(Sprite portrait, string message)
-        => StartDialogue(portrait, message, NoOp);
+    public void ShowDialogue(Sprite portrait, string message)
+        => ShowDialogue(portrait, message, NoOp);
 
-    public void StartDialogue(Sprite portrait, string message, Action yesAction, Action noAction)
+    public void ShowDialogue(Sprite portrait, string message, Action yesAction, Action noAction)
     {
         YesAction = yesAction;
         NoAction = noAction;
         AdvanceAction = null;
-        StartDialogue(portrait, message, true);
+        ShowDialogue(portrait, message, true);
     }
 
     private void HandleAction(Action action)
     {
-        EndDialogue();
+        _DialogueWasJustShown = false;
         action();
-    }
 
-    private void EndDialogue()
-        => gameObject.SetActive(false);
+        // If the action didn't continue the dialogue, the dialogue session ends.
+        if (!_DialogueWasJustShown)
+        {
+            gameObject.SetActive(false);
+            DialogueEnd?.Invoke();
+        }
+    }
 
     private void Update()
     {

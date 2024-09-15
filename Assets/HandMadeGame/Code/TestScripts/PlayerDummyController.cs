@@ -2,8 +2,19 @@ using UnityEngine;
 
 public class PlayerDummyController : MonoBehaviour
 {
+    private bool Suppressed = false;
+
+    private void Awake()
+    {
+        DialogueController.DialogueStart += () => Suppressed = true;
+        DialogueController.DialogueEnd += () => Suppressed = false;
+    }
+
     private void FixedUpdate()
     {
+        if (Suppressed)
+            return;
+
         const float speed = 0.1f;
         Vector3 offset = Vector3.zero;
 

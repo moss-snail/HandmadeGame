@@ -8,23 +8,29 @@ public class HudTests : MonoBehaviour
     public Sprite Snel;
     public Sprite Snel2;
 
+    private void Awake()
+    {
+        DialogueController.DialogueStart += () => Debug.Log("Dialogue session started");
+        DialogueController.DialogueEnd += () => Debug.Log("Dialogue session ended");
+    }
+
     private void OnGUI()
     {
         if (GUILayout.Button("Basic Test"))
         {
-            DialogueController.StartDialogue(Snel, "Test");
+            DialogueController.ShowDialogue(Snel, "Test");
         }
 
         if (GUILayout.Button("Conversation Test"))
         {
-            DialogueController.StartDialogue(Snel, "Test?", () => DialogueController.StartDialogue(Snel2, "Test!"));
+            DialogueController.ShowDialogue(Snel, "Test?", () => DialogueController.ShowDialogue(Snel2, "Test!"));
         }
 
         if (GUILayout.Button("Choice"))
         {
-            DialogueController.StartDialogue(Snel, "Test?",
-                () => DialogueController.StartDialogue(Snel2, "Yes"),
-                () => DialogueController.StartDialogue(Snel2, "No")
+            DialogueController.ShowDialogue(Snel, "Test?",
+                () => DialogueController.ShowDialogue(Snel2, "Yes"),
+                () => DialogueController.ShowDialogue(Snel2, "No")
             );
         }
 

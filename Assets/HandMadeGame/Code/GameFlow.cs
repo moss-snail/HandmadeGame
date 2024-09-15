@@ -26,7 +26,7 @@ public sealed class GameFlow : MonoBehaviour
     public void HandleInteraction(Quest quest)
     {
         Debug.Log($"Interacting with quest '{quest.name}'");
-        DialogueController.StartDialogue(quest.CharacterPortrait, quest.QuestRejectedDialogue);
+        DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestRejectedDialogue);
     }
 
     public void HandleInteraction(NestItem item)
