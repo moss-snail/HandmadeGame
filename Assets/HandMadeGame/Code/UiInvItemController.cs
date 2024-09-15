@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UiItemController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class UiInvItemController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public ArrangementController ac; // I realize this is jank, will polish later
 
@@ -32,16 +32,13 @@ public class UiItemController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     }
 
     public void OnPointerUp(PointerEventData pointerEventData) {
-        Debug.Log("what the fajita");
         Cursor.SetCursor(normalCursor, Vector2.zero, CursorMode.Auto);
         Vector2 mouseCoords = Input.mousePosition;
         Vector2 boardLoc = FindTileLocation(mouseCoords);
-        ac.UpdateBoard(boardLoc, invIndex, this.gameObject.GetComponent<Image>());
-        this.gameObject.SetActive(false);
+        bool success = ac.UpdateBoard(boardLoc, invIndex, this.gameObject.GetComponent<Image>());
     }
 
     private Vector2 FindTileLocation(Vector2 mouseCoords) {
-        Debug.Log("what the taco");
         float relativeX = mouseCoords[0];
         float relativeY = mouseCoords[1];
         Vector2 boardPos = new Vector2(-1, -1);
@@ -52,14 +49,10 @@ public class UiItemController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         // find col
         if (relativeX < .45 * Screen.width) {
             boardPos = new Vector2(boardPos[0], 0);
-            Debug.Log("what is happening");
-            Debug.Log(0);
         } else if (relativeX < .55 * Screen.width) {
             boardPos = new Vector2(boardPos[0], 1);
-            Debug.Log(1);
         } else if (relativeX < .65 * Screen.width) {
             boardPos = new Vector2(boardPos[0], 2);
-            Debug.Log(2);
         } else {
             boardPos = new Vector2(boardPos[0], -1);
             Debug.Log("you broke it. good job.");
