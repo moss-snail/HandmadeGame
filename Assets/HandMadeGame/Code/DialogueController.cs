@@ -17,11 +17,6 @@ public sealed class DialogueController : MonoBehaviour
 
     private static Action NoOp = () => { };
 
-    /// <summary>Fires when a new dialogue session starts</summary>
-    public static event Action DialogueStart;
-    /// <summary>Fires when a dialogue session ends</summary>
-    public static event Action DialogueEnd;
-
     private void Awake()
         => gameObject.SetActive(false);
 
@@ -51,7 +46,7 @@ public sealed class DialogueController : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
-            DialogueStart?.Invoke();
+            UiController.StartUiInteraction();
         }
     }
 
@@ -90,7 +85,7 @@ public sealed class DialogueController : MonoBehaviour
         if (!_DialogueWasJustShown)
         {
             gameObject.SetActive(false);
-            DialogueEnd?.Invoke();
+            UiController.EndUiInteraction();
         }
     }
 

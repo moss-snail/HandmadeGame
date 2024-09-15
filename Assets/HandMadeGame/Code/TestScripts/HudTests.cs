@@ -9,18 +9,18 @@ public class HudTests : MonoBehaviour
     public Sprite Snel;
     public Sprite Snel2;
 
-    private bool DialogueSessionActive;
+    private bool UiActive;
 
     private void Awake()
     {
-        DialogueController.DialogueStart += () => DialogueSessionActive = true;
-        DialogueController.DialogueEnd += () => DialogueSessionActive = false;
+        UiController.UiInteractionStart += () => UiActive = true;
+        UiController.UiInteractionEnd += () => UiActive = false;
     }
 
     private void OnGUI()
     {
         GUILayout.BeginArea(new Rect(10f, 0f, 120f, 1000f));
-        GUILayout.Label($"Dialogue session {(DialogueSessionActive ? "active" : "inactive")}");
+        GUILayout.Label($"UI is {(UiActive ? "active" : "inactive")} (depth {UiController.UiSessionDepth})");
 
         if (GUILayout.Button("Basic Test"))
         {
