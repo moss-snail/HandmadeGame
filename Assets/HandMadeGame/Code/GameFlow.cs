@@ -141,7 +141,13 @@ public sealed class GameFlow : MonoBehaviour
     private void WinConditionCheck()
     {
         if (Reputation >= WinReputation)
-            InfoPopupController.ShowPopup("You successfully redecorated everyone's nest and are widely recognized in your park as an\n<size=130%><<em>Expert Interior Birdecorator</em>></size>\n\nThanks for playing!");
+            InfoPopupController.ShowPopup
+            (
+                "You successfully redecorated everyone's nest!\n" +
+                "Now you're widely recognized in your park as an\n\n" +
+                "<size=130%><<em>Expert Interior Birdecorator</em>></size>\n\n" +
+                "Thanks for playing!"
+            );
     }
 
     private void OnDestroy()
