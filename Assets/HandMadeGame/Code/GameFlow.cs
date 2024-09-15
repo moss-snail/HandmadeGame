@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public sealed class GameFlow : MonoBehaviour
     public int Reputation;
 
     public DialogueController DialogueController;
+    public ArrangementModeControllerBase ArrangementModeController;
 
     private Quest CurrentQuest;
 
@@ -56,7 +58,7 @@ public sealed class GameFlow : MonoBehaviour
                     quest.CharacterPortrait,
                     quest.StartDialogue,
                     // Yes
-                    //TODO: Show quest description somewhere
+                    //TODO: Show quest popup somewhere
                     () => DialogueController.ShowDialogue
                     (
                         quest.CharacterPortrait,
@@ -78,7 +80,7 @@ public sealed class GameFlow : MonoBehaviour
                     quest.CharacterPortrait,
                     quest.ReadyToBeginDialogue,
                     "Yes, I'm ready!",
-                    () => DialogueController.ShowDialogue(quest.CharacterPortrait, "TODO: START ARRANGEMENT MODE"),
+                    () => ArrangementModeController.StartArrangementMode(quest),
                     "Not quite...",
                     () => DialogueController.ShowDialogue
                     (
@@ -104,6 +106,25 @@ public sealed class GameFlow : MonoBehaviour
         Debug.Log($"Interacting with nest item '{item.name}'");
         Inventory.Add(item);
         item.gameObject.SetActive(false);
+    }
+
+    public void EndArrangementMode(Quest quest)
+    {
+        if (quest != CurrentQuest)
+            throw new InvalidOperationException("Arrangement mode should not be ended with a quest that isn't the current quest!");
+
+        PuzzleOutcome outcome = quest.Validator.CheckPuzzle(quest);
+        switch (outcome)
+        {
+            case PuzzleOutcome.Perfect: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestCompleteDialogue); break;
+            case PuzzleOutcome.WrongItemsPresent: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.WrongItemsDialogue); break;
+            case PuzzleOutcome.NotEnoughItems: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.NotEnoughItemsDialogue); break;
+            case PuzzleOutcome.IncorrectPlacement: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.WrongItemArrangementDialogue); break;
+            default:
+                Debug.LogError($"Invalid puzzle outcome '{outcome}'!");
+                DialogueController.ShowDialogue(quest.CharacterPortrait, "Your decorating was so good it broke the matrix!");
+                break;
+        }
     }
 
     private void OnDestroy()

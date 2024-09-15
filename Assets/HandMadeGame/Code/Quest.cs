@@ -35,9 +35,19 @@ public sealed class Quest : MonoBehaviour
     [Header("Items to spawn")]
     public GameObject[] SpawnOnAccept;
 
+    [HideInInspector]
+    public QuestValidatorBase Validator;
+
     private void Awake()
     {
         CurrentState = QuestState.NotStarted;
         Board = new NestItem[BoardWidth, BoardHeight];
+
+        Validator = GetComponent<QuestValidatorBase>();
+        if (Validator == null)
+        {
+            Debug.LogError($"Quest '{name}' does not have a validator!");
+            Validator = gameObject.AddComponent<NullQuestValidator>();
+        }
     }
 }
