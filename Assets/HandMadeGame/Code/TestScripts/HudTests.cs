@@ -34,6 +34,14 @@ public class HudTests : MonoBehaviour
             );
         }
 
+        if (GUILayout.Button("Custom choice"))
+        {
+            DialogueController.ShowDialogue(Snel, "Test?",
+                "Yes, I'm ready!", () => { },
+                "Not quite...", () => { }
+            );
+        }
+
         if (GUILayout.Button("Show prompt E"))
             ControllerPrompt.Show(KeyCode.E, "Do the thing");
         if (GUILayout.Button("Show prompt F"))

@@ -9,6 +9,8 @@ public sealed class DialogueController : MonoBehaviour
     public TMP_Text DialogueText;
     public Button YesButton;
     public Button NoButton;
+    public TMP_Text YesText;
+    public TMP_Text NoText;
     private Action YesAction;
     private Action NoAction;
     private Action AdvanceAction;
@@ -30,10 +32,18 @@ public sealed class DialogueController : MonoBehaviour
     }
 
     private bool _DialogueWasJustShown = false;
-    private void ShowDialogue(Sprite portrait, string message, bool showButtons)
+    private void ShowDialogue(Sprite portrait, string message, bool showButtons, string yesText = "Yes", string noText = "No")
     {
         Portrait.sprite = portrait;
-        DialogueText.text = message;
+        DialogueText.text = message
+            .Replace("<em>", "<color=#FF0000>")
+            .Replace("</em>", "</color>");
+
+        if (showButtons)
+        {
+            YesText.text = yesText;
+            NoText.text = noText;
+        }
 
         YesButton.gameObject.SetActive(showButtons);
         NoButton.gameObject.SetActive(showButtons);
@@ -63,6 +73,14 @@ public sealed class DialogueController : MonoBehaviour
         NoAction = noAction;
         AdvanceAction = null;
         ShowDialogue(portrait, message, true);
+    }
+
+    public void ShowDialogue(Sprite portrait, string message, string yesText, Action yesAction, string noText, Action noAction)
+    {
+        YesAction = yesAction;
+        NoAction = noAction;
+        AdvanceAction = null;
+        ShowDialogue(portrait, message, true, yesText, noText);
     }
 
     private void HandleAction(Action action)

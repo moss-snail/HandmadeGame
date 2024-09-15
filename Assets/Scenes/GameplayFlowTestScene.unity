@@ -1265,7 +1265,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1356150162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1455,6 +1455,8 @@ MonoBehaviour:
   DialogueText: {fileID: 827468818}
   YesButton: {fileID: 1963711654}
   NoButton: {fileID: 1917757604}
+  YesText: {fileID: 1970933858}
+  NoText: {fileID: 1988510568}
 --- !u!1 &1708591712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1792,7 +1794,7 @@ GameObject:
   - component: {fileID: 1970933859}
   - component: {fileID: 1970933858}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: YesButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1926,7 +1928,7 @@ GameObject:
   - component: {fileID: 1988510569}
   - component: {fileID: 1988510568}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: NoButtonText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
