@@ -12,6 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - DR_CEL_EXTRA_ON
   - _CELPRIMARYMODE_SINGLE
   - _UNITYSHADOWMODE_MULTIPLY
   m_InvalidKeywords: []
@@ -22,9 +23,8 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - SRPDEFAULTUNLIT
-  m_LockedProperties: _CameraDistanceImpact _ColorDim _Flatness _OutlineDepthOffset
-    _OutlineEnabled _OutlineScale _OutlineSpace _OutlineWidth _SelfShadingSize _ShadowEdgeSize
-    _VertexExtrusionSmoothNormals
+  m_LockedProperties: _CameraDistanceImpact _OutlineDepthOffset _OutlineEnabled _OutlineScale
+    _OutlineSpace _OutlineWidth _VertexExtrusionSmoothNormals
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -143,7 +143,7 @@ Material:
     - _Blend: 0
     - _BumpScale: 1
     - _CameraDistanceImpact: 0.5
-    - _CelExtraEnabled: 0
+    - _CelExtraEnabled: 1
     - _CelNumSteps: 3
     - _CelPrimaryMode: 1
     - _Cull: 2
@@ -165,7 +165,7 @@ Material:
     - _FlatSpecularEnabled: 1
     - _FlatSpecularSize: 0.5
     - _FlatSpecularSmoothness: 0.5
-    - _Flatness: 1
+    - _Flatness: 0
     - _FlatnessExtra: 1
     - _FlatnessSecondary: 1
     - _GlossMapScale: 1
@@ -174,7 +174,7 @@ Material:
     - _GradientAngle: 0
     - _GradientBottom: 0
     - _GradientCenterX: 0
-    - _GradientCenterY: 0.1
+    - _GradientCenterY: 0
     - _GradientEnabled: 0
     - _GradientEnd: 0.55
     - _GradientSize: 1
@@ -207,10 +207,10 @@ Material:
     - _RimEnabled: 0
     - _SecondaryColor: 1
     - _SecondaryColorEnabled: 1
-    - _SelfShadingSize: 0.629
-    - _SelfShadingSizeExtra: 0.27
+    - _SelfShadingSize: 1
+    - _SelfShadingSizeExtra: 0.783
     - _ShadowEdgeSize: 0.182
-    - _ShadowEdgeSizeExtra: 0.256
+    - _ShadowEdgeSizeExtra: 0.176
     - _ShadowEdgeSmoothness: 0.01
     - _ShadowFalloff: 0.01
     - _Smoothness0: 0.5
@@ -227,7 +227,7 @@ Material:
     - _UVSec: 0
     - _UnityShadowMode: 1
     - _UnityShadowOcclusion: 0
-    - _UnityShadowPower: 0.2
+    - _UnityShadowPower: 0.536
     - _UnityShadowSharpness: 1
     - _VertexColorsEnabled: 0
     - _VertexExtrusionSmoothNormals: 0
@@ -238,7 +238,7 @@ Material:
     - _ColorCelShadow: {r: 0.38581347, g: 0.38787434, b: 0.9622642, a: 1}
     - _ColorDim: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDimCurve: {r: 0.85, g: 0.85, b: 0.85, a: 0.85}
-    - _ColorDimExtra: {r: 0.098039225, g: 0.23529413, b: 0.24313727, a: 0.85}
+    - _ColorDimExtra: {r: 0.67295593, g: 0.67295593, b: 0.67295593, a: 0.85}
     - _ColorDimSteps: {r: 0.85, g: 0.85, b: 0.85, a: 0.85}
     - _ColorGradient: {r: 0.12477186, g: 0.57112503, b: 0.07421358, a: 1}
     - _ColorSecondary: {r: 1, g: 0.55879205, b: 0, a: 1}
