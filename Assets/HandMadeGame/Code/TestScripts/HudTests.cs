@@ -4,22 +4,23 @@ public class HudTests : MonoBehaviour
 {
     public DialogueController DialogueController;
     public ControllerPrompt ControllerPrompt;
+    public InfoPopupController InfoPopupController;
 
     public Sprite Snel;
     public Sprite Snel2;
 
-    private bool DialogueSessionActive;
+    private bool UiActive;
 
     private void Awake()
     {
-        DialogueController.DialogueStart += () => DialogueSessionActive = true;
-        DialogueController.DialogueEnd += () => DialogueSessionActive = false;
+        UiController.UiInteractionStart += () => UiActive = true;
+        UiController.UiInteractionEnd += () => UiActive = false;
     }
 
     private void OnGUI()
     {
         GUILayout.BeginArea(new Rect(10f, 0f, 120f, 1000f));
-        GUILayout.Label($"Dialogue session {(DialogueSessionActive ? "active" : "inactive")}");
+        GUILayout.Label($"UI is {(UiActive ? "active" : "inactive")} (depth {UiController.UiSessionDepth})");
 
         if (GUILayout.Button("Basic Test"))
         {
@@ -55,6 +56,9 @@ public class HudTests : MonoBehaviour
             ControllerPrompt.Show(KeyCode.G, "Do the other thing");
         if (GUILayout.Button("Hide prompt"))
             ControllerPrompt.Hide();
+
+        if (GUILayout.Button("Info Popup"))
+            InfoPopupController.ShowPopup("This is a test of the emergency birdcast system, don't let it get your feathers ruffled!", () => Debug.Log("Test popup dismissed"));
 
         GUILayout.EndArea();
     }

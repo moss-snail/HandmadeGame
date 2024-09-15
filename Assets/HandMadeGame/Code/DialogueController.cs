@@ -17,11 +17,6 @@ public sealed class DialogueController : MonoBehaviour
 
     private static Action NoOp = () => { };
 
-    /// <summary>Fires when a new dialogue session starts</summary>
-    public static event Action DialogueStart;
-    /// <summary>Fires when a dialogue session ends</summary>
-    public static event Action DialogueEnd;
-
     private void Awake()
         => gameObject.SetActive(false);
 
@@ -35,9 +30,7 @@ public sealed class DialogueController : MonoBehaviour
     private void ShowDialogue(Sprite portrait, string message, bool showButtons, string yesText = "Yes", string noText = "No")
     {
         Portrait.sprite = portrait;
-        DialogueText.text = message
-            .Replace("<em>", "<color=#FF0000>")
-            .Replace("</em>", "</color>");
+        DialogueText.text = UiController.ProcessDisplayString(message);
 
         if (showButtons)
         {
@@ -53,7 +46,7 @@ public sealed class DialogueController : MonoBehaviour
         if (!gameObject.activeSelf)
         {
             gameObject.SetActive(true);
-            DialogueStart?.Invoke();
+            UiController.StartUiInteraction();
         }
     }
 
@@ -92,7 +85,7 @@ public sealed class DialogueController : MonoBehaviour
         if (!_DialogueWasJustShown)
         {
             gameObject.SetActive(false);
-            DialogueEnd?.Invoke();
+            UiController.EndUiInteraction();
         }
     }
 
@@ -100,7 +93,7 @@ public sealed class DialogueController : MonoBehaviour
     {
         if (gameObject.activeInHierarchy && AdvanceAction != null)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0) || Input.GetKeyDown(PlayerInteraction.InteractionKey))
+            if (UiController.CheckGlobalDismiss())
                 HandleAction(AdvanceAction);
         }
     }
