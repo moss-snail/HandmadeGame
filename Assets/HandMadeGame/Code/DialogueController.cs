@@ -35,9 +35,7 @@ public sealed class DialogueController : MonoBehaviour
     private void ShowDialogue(Sprite portrait, string message, bool showButtons, string yesText = "Yes", string noText = "No")
     {
         Portrait.sprite = portrait;
-        DialogueText.text = message
-            .Replace("<em>", "<color=#FF0000>")
-            .Replace("</em>", "</color>");
+        DialogueText.text = UiController.ProcessDisplayString(message);
 
         if (showButtons)
         {
@@ -100,7 +98,7 @@ public sealed class DialogueController : MonoBehaviour
     {
         if (gameObject.activeInHierarchy && AdvanceAction != null)
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0) || Input.GetKeyDown(PlayerInteraction.InteractionKey))
+            if (UiController.CheckGlobalDismiss())
                 HandleAction(AdvanceAction);
         }
     }

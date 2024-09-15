@@ -4,6 +4,7 @@ public class HudTests : MonoBehaviour
 {
     public DialogueController DialogueController;
     public ControllerPrompt ControllerPrompt;
+    public InfoPopupController InfoPopupController;
 
     public Sprite Snel;
     public Sprite Snel2;
@@ -55,6 +56,9 @@ public class HudTests : MonoBehaviour
             ControllerPrompt.Show(KeyCode.G, "Do the other thing");
         if (GUILayout.Button("Hide prompt"))
             ControllerPrompt.Hide();
+
+        if (GUILayout.Button("Info Popup"))
+            InfoPopupController.ShowPopup("This is a test of the emergency birdcast system, don't let it get your feathers ruffled!", () => Debug.Log("Test popup dismissed"));
 
         GUILayout.EndArea();
     }
