@@ -11772,7 +11772,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: c5265ead9c5b92f43826cb93b7562979,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.6
+      value: 14.084
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c5265ead9c5b92f43826cb93b7562979,
         type: 3}
@@ -11820,7 +11820,8 @@ PrefabInstance:
       value: Bird_006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8416272007918961125, guid: c5265ead9c5b92f43826cb93b7562979, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: c5265ead9c5b92f43826cb93b7562979,
         type: 3}
