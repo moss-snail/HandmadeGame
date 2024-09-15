@@ -22,9 +22,8 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - SRPDEFAULTUNLIT
-  m_LockedProperties: _CameraDistanceImpact _ColorDim _Flatness _OutlineDepthOffset
-    _OutlineEnabled _OutlineScale _OutlineSpace _OutlineWidth _SelfShadingSize _ShadowEdgeSize
-    _VertexExtrusionSmoothNormals
+  m_LockedProperties: _CameraDistanceImpact _OutlineDepthOffset _OutlineEnabled _OutlineScale
+    _OutlineSpace _OutlineWidth _VertexExtrusionSmoothNormals
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -165,7 +164,7 @@ Material:
     - _FlatSpecularEnabled: 1
     - _FlatSpecularSize: 0.5
     - _FlatSpecularSmoothness: 0.5
-    - _Flatness: 1
+    - _Flatness: 0
     - _FlatnessExtra: 1
     - _FlatnessSecondary: 1
     - _GlossMapScale: 1
