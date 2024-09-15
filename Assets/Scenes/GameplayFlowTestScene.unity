@@ -122,6 +122,107 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &190791634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 190791637}
+  - component: {fileID: 190791635}
+  - component: {fileID: 190791638}
+  m_Layer: 3
+  m_Name: GarbageNest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!135 &190791635
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190791634}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &190791637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190791634}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 43.35, y: -5.1776953, z: 27.29}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1171650334}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &190791638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190791634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a043c84476980fb4ba26c3c3630cf912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterPortrait: {fileID: 21300000, guid: c730fc5951139b04b945942d99c30513, type: 3}
+  RequiredReputation: 2
+  StartDialogue: "What\u2019s up, bird? I heard you were the new Birdecorator in
+    town. Quite the reputation you\u2019ve made for yourself. \r\nI confess I could
+    use the help with my new nest. I\u2019m starting over in the park too. To many
+    <i>vultures</i> back home if you know what I mean. \r\n"
+  QuestAcceptedDialogue: "Oh, worm? Peck yeah. This place is a little to clean for
+    my taste. Could you find me some <em>garbage</em>? I think <em>3</em> pieces
+    would be plenty. I only want it on one side of my nest though. Gotta have a clean
+    side for guests.\r"
+  QuestDescription: Find 3 pieces of garbage and bring them back. Place them on only
+    <em>one</em> side of the nest.
+  QuestRejectedDialogue: "Are you one of those birds that doesn\u2019t \u201Cbelieve\u201D
+    in trash decor? Come back when you\u2019re ready to be enlightened."
+  ReputationRequirementNotMetDialogue: "Oh, I don\u2019t think you\u2019re ready
+    to decorate my nest\u2026"
+  QuestAlreadyCompletedDialogue: Thanks for all your hard work! I love how you decorated
+    my nest!
+  ReadyToBeginDialogue: Caw my friend. Did you find some choice garbage? You ready
+    to set up?
+  NotReadyToBeginDialogue: "That\u2019s okay bird, go with the windflow. I am sure
+    you\u2019re trying to find just the right stench for me. Do you need a reminder
+    of my particular style?"
+  NoNeedToRepeatDialogue: Coo, coo. Let me know if you need a reminder, bird.
+  QuestCompleteDialogue: "The stink is so enticing. I can\u2019t wait until the other
+    buzzards see."
+  WrongItemsDialogue: "I don\u2019t know, bird. Some of this stuff looks a little
+    clean\u2026"
+  NotEnoughItemsDialogue: "It\u2019s not really sloppy enough for my taste. Are you
+    sure you have enough?"
+  WrongItemArrangementDialogue: This trash is a little scattered. Do you think we
+    could keep it on one side?
+  CurrentState: 0
+  SpawnOnAccept: []
 --- !u!1 &198687785
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,7 +784,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Inventory: []
+  Reputation: 0
   DialogueController: {fileID: 1612036605}
+  ShowDebugger: 1
 --- !u!4 &911570137
 Transform:
   m_ObjectHideFlags: 0
@@ -1131,6 +1234,190 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 808333008}
   m_SourcePrefab: {fileID: 100100000, guid: f602148341bcc5f448fcc86337d04dd1, type: 3}
+--- !u!1 &1171650333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1171650334}
+  - component: {fileID: 1171650336}
+  - component: {fileID: 1171650335}
+  m_Layer: 0
+  m_Name: NestVisuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1171650334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171650333}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.38, z: 0}
+  m_LocalScale: {x: 1, y: 0.125, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 190791637}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1171650335
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171650333}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7e6bbf18e4054734badc77208fb48753, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1171650336
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1171650333}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1271982229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1271982232}
+  - component: {fileID: 1271982230}
+  - component: {fileID: 1271982233}
+  m_Layer: 3
+  m_Name: ChristmasNest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!135 &1271982230
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271982229}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1271982232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271982229}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 43.42, y: -5.1776953, z: 29.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1621158927}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1271982233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271982229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a043c84476980fb4ba26c3c3630cf912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CharacterPortrait: {fileID: 21300000, guid: 6494f05a182e28a43a340338bbefb9d9, type: 3}
+  RequiredReputation: 1
+  StartDialogue: "Merry Christmas! Er, well, I wish it was. I am so ready for the
+    holidays! But it has been so hard to find Christmas decorations this time of
+    year\u2026It\u2019s not too early to celebrate I don\u2019t care what anyone
+    says! \r\nYou\u2019re the new Interior Birdecorator in the park, right? Do you
+    think you can help me decorate my nest so that it has as much holiday spirit
+    as I do?\r"
+  QuestAcceptedDialogue: "Ho ho ho! What a good helper! I was hoping you could find
+    <em>Christmassy</em> items to put on my <em>tree</em>. Can you bring me <em>3</em>
+    decorations?\r"
+  QuestDescription: "Find 3 items that could be used for Christmas decorations. Bring
+    them back and place them on the client\u2019s tree. "
+  QuestRejectedDialogue: "What?! Don\u2019t tell me you think it\u2019s too early
+    to start decorating! Come back if you decide you want to be on the good list."
+  ReputationRequirementNotMetDialogue: "Oh, I don\u2019t think you\u2019re ready
+    to decorate my nest\u2026"
+  QuestAlreadyCompletedDialogue: Thanks for all your hard work! I love how you decorated
+    my nest!
+  ReadyToBeginDialogue: Happy holidays! Are you ready to set up the tree?
+  NotReadyToBeginDialogue: "That\u2019s okay, I am still preparing the cookies and
+    milk, anyway. Do you need to check my list again? It is always important to check
+    twice!"
+  NoNeedToRepeatDialogue: Alright, I will go back to baking my fruitcake. Let me
+    know if you need anything!
+  QuestCompleteDialogue: "It\u2019s a winter wonderland in here! I love it!"
+  WrongItemsDialogue: "I don\u2019t know if I think these items are \u201CChristmassy\u201D
+    enough\u2026do you have anything else?"
+  NotEnoughItemsDialogue: "I think this tree could use a few more ornaments. Don\u2019t
+    want to disappoint Santa!"
+  WrongItemArrangementDialogue: "No, no, I want the decorations on the tree. Otherwise,
+    I won\u2019t have room for presents!"
+  CurrentState: 0
+  SpawnOnAccept: []
 --- !u!1 &1324917085
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,6 +1744,89 @@ MonoBehaviour:
   NoButton: {fileID: 1917757604}
   YesText: {fileID: 1970933858}
   NoText: {fileID: 1988510568}
+--- !u!1 &1621158926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1621158927}
+  - component: {fileID: 1621158929}
+  - component: {fileID: 1621158928}
+  m_Layer: 0
+  m_Name: NestVisuals
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1621158927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621158926}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.38, z: 0}
+  m_LocalScale: {x: 1, y: 0.125, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1271982232}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &1621158928
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621158926}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 7e6bbf18e4054734badc77208fb48753, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1621158929
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621158926}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1708591712
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,7 +2500,7 @@ GameObject:
   - component: {fileID: 2028315791}
   - component: {fileID: 2028315790}
   m_Layer: 3
-  m_Name: Nest
+  m_Name: ParentNest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2170,17 +2540,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterPortrait: {fileID: 21300000, guid: 72bfa0719427ef14f943674560e9cecd, type: 3}
+  RequiredReputation: 0
   StartDialogue: "Hello! Are you the new Birdecorator in the park? Goodness, I am
     SO glad you stopped by my nest! My partner is at the OGBRD right now for a check-up\u2026I 
     thought it might be nice to surprise her by having the nursery set up when she
     gets back! The thing is\u2026I\u2019m not really any good at decorating and I
     want it to look nice. Do you think you can help me?"
+  QuestAcceptedDialogue: "That\u2019s great! Really great! Okay, what we need is
+    <em>soft</em> items for the nursery nest. Can you find about <em>3</em> things?"
   QuestDescription: Find 3 items that might be soft enough for a baby bird nest!
     Bring them back and construct the nest for the client.
   QuestRejectedDialogue: "Oh\u2026well alright\u2026 If you change your mind, please
     let me know! I could use the help."
-  SpawnOnAccept: []
-  RequiredReputation: 0
   ReputationRequirementNotMetDialogue: "Oh, I don\u2019t think you\u2019re ready
     to decorate my nest\u2026"
   QuestAlreadyCompletedDialogue: Thanks for all your hard work! I love how you decorated
@@ -2199,6 +2570,7 @@ MonoBehaviour:
   WrongItemArrangementDialogue: "That isn\u2019t exactly where I pictured it. Do
     you think you could try putting the items somewhere else?"
   CurrentState: 0
+  SpawnOnAccept: []
 --- !u!4 &2028315792
 Transform:
   m_ObjectHideFlags: 0
@@ -2298,4 +2670,6 @@ SceneRoots:
   - {fileID: 2023744929}
   - {fileID: 1356150163}
   - {fileID: 2028315792}
+  - {fileID: 1271982232}
+  - {fileID: 190791637}
   - {fileID: 697995923}

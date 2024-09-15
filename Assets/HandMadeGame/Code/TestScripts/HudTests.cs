@@ -8,14 +8,19 @@ public class HudTests : MonoBehaviour
     public Sprite Snel;
     public Sprite Snel2;
 
+    private bool DialogueSessionActive;
+
     private void Awake()
     {
-        DialogueController.DialogueStart += () => Debug.Log("Dialogue session started");
-        DialogueController.DialogueEnd += () => Debug.Log("Dialogue session ended");
+        DialogueController.DialogueStart += () => DialogueSessionActive = true;
+        DialogueController.DialogueEnd += () => DialogueSessionActive = false;
     }
 
     private void OnGUI()
     {
+        GUILayout.BeginArea(new Rect(10f, 0f, 120f, 1000f));
+        GUILayout.Label($"Dialogue session {(DialogueSessionActive ? "active" : "inactive")}");
+
         if (GUILayout.Button("Basic Test"))
         {
             DialogueController.ShowDialogue(Snel, "Test");
@@ -50,5 +55,7 @@ public class HudTests : MonoBehaviour
             ControllerPrompt.Show(KeyCode.G, "Do the other thing");
         if (GUILayout.Button("Hide prompt"))
             ControllerPrompt.Hide();
+
+        GUILayout.EndArea();
     }
 }

@@ -7,8 +7,13 @@ public sealed class GameFlow : MonoBehaviour
 
     [HideInInspector]
     public List<NestItem> Inventory = new();
+    public int Reputation;
 
     public DialogueController DialogueController;
+
+    private Quest CurrentQuest;
+
+    public bool ShowDebugger;
 
 
     private void Awake()
@@ -26,7 +31,72 @@ public sealed class GameFlow : MonoBehaviour
     public void HandleInteraction(Quest quest)
     {
         Debug.Log($"Interacting with quest '{quest.name}'");
-        DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestRejectedDialogue);
+
+        switch (quest.CurrentState)
+        {
+            case QuestState.NotStarted:
+            {
+                // Player does not have enough reputation
+                if (Reputation < quest.RequiredReputation)
+                {
+                    DialogueController.ShowDialogue(quest.CharacterPortrait, quest.ReputationRequirementNotMetDialogue);
+                    return;
+                }
+
+                if (CurrentQuest != null)
+                {
+                    // We don't plan for this to be possible, complain if it happens
+                    Debug.LogError("Trying to handle game flow for a quest which has not been started when the current quest is still in progress!");
+                    DialogueController.ShowDialogue(quest.CharacterPortrait, "Looks like you're already busy with another client. Come back to me when you're done with them!");
+                    return;
+                }
+
+                DialogueController.ShowDialogue
+                (
+                    quest.CharacterPortrait,
+                    quest.StartDialogue,
+                    // Yes
+                    //TODO: Show quest description somewhere
+                    () => DialogueController.ShowDialogue
+                    (
+                        quest.CharacterPortrait,
+                        quest.QuestAcceptedDialogue,
+                        () =>
+                        {
+                            quest.CurrentState = QuestState.Accepted;
+                            CurrentQuest = quest;
+                        }),
+                    () => DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestRejectedDialogue)
+                );
+                break;
+            }
+            case QuestState.Accepted:
+                Debug.Assert(quest == CurrentQuest);
+
+                DialogueController.ShowDialogue
+                (
+                    quest.CharacterPortrait,
+                    quest.ReadyToBeginDialogue,
+                    "Yes, I'm ready!",
+                    () => DialogueController.ShowDialogue(quest.CharacterPortrait, "TODO: START ARRANGEMENT MODE"),
+                    "Not quite...",
+                    () => DialogueController.ShowDialogue
+                    (
+                        quest.CharacterPortrait,
+                        quest.NotReadyToBeginDialogue,
+                        () => DialogueController.ShowDialogue(quest.CharacterPortrait, "TODO: SHOW QUEST POPUP"),
+                        () => DialogueController.ShowDialogue(quest.CharacterPortrait, quest.NoNeedToRepeatDialogue)
+                    )
+                );
+                break;
+            case QuestState.Completed:
+                DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestAlreadyCompletedDialogue);
+                break;
+            default:
+                Debug.LogError("!!! Quest state is invalid !!!");
+                DialogueController.ShowDialogue(quest.CharacterPortrait, "Sorry friend, but my quest is corrupted!");
+                break;
+        }
     }
 
     public void HandleInteraction(NestItem item)
@@ -41,4 +111,32 @@ public sealed class GameFlow : MonoBehaviour
         if (Instance == this)
             Instance = null;
     }
+
+#if DEBUG
+    private void OnGUI()
+    {
+        if (!ShowDebugger)
+            return;
+
+        GUILayout.BeginArea(new Rect(140f, 0f, 120f, 1000f));
+        GUILayout.Label($"Reputation: {Reputation}");
+        GUILayout.Label($"Current quest: {(CurrentQuest == null ? "<none>" : CurrentQuest.name)}");
+        if (CurrentQuest != null)
+        {
+            if (GUILayout.Button("Abort quest"))
+            {
+                CurrentQuest.CurrentState = QuestState.NotStarted;
+                CurrentQuest = null;
+            }
+
+            if (GUILayout.Button("Complete quest"))
+            {
+                Reputation++;
+                CurrentQuest.CurrentState = QuestState.Completed;
+                CurrentQuest = null;
+            }
+        }
+        GUILayout.EndArea();
+    }
+#endif
 }

@@ -7,6 +7,7 @@ public sealed class Quest : MonoBehaviour
 
     [Header("Quest Logistics")]
     [Multiline] public string StartDialogue = "HELLO YES I WOULD LIKE SOME DECORATION";
+    [Multiline] public string QuestAcceptedDialogue = "THANK YOU, PLEASE FIND [number] ITEMS";
     [Multiline] public string QuestDescription = "FIND [number] ITEMS";
     [Multiline] public string QuestRejectedDialogue = "WOW ARE YOU A BIRDECORATOR OR NOT?";
 
