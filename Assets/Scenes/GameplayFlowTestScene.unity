@@ -1556,10 +1556,12 @@ MonoBehaviour:
     think you can help me decorate my nest so that it has as much holiday spirit
     as I do?\r"
   QuestAcceptedDialogue: "Ho ho ho! What a good helper! I was hoping you could find
-    <em>Christmassy</em> items to put on my <em>tree</em>. Can you bring me <em>3</em>
-    decorations?\r"
-  QuestDescription: "Find 3 items that could be used for Christmas decorations. Bring
-    them back and place them on the client\u2019s tree. "
+    <em>Christmassy</em> items to put around my <em>tree</em>. Can you bring me <em>3</em>
+    decorations?\n###\nOh...do you think you could also help me find a <em>Christmas
+    tree</em>? I actually don't have one yet...\r"
+  ItemToGive: {fileID: 0}
+  QuestDescription: 'Find a Christmas tree and 3 items that could be used for Christmas
+    decorations. Bring them back and place them in the client''s nest.. '
   QuestRejectedDialogue: "What?! Don\u2019t tell me you think it\u2019s too early
     to start decorating! Come back if you decide you want to be on the good list."
   ReputationRequirementNotMetDialogue: "Oh, I don\u2019t think you\u2019re ready
@@ -1577,8 +1579,8 @@ MonoBehaviour:
     enough\u2026do you have anything else?"
   NotEnoughItemsDialogue: "I think this tree could use a few more ornaments. Don\u2019t
     want to disappoint Santa!"
-  WrongItemArrangementDialogue: "No, no, I want the decorations on the tree. Otherwise,
-    I won\u2019t have room for presents!"
+  WrongItemArrangementDialogue: No, no, I want the decorations <em>around</em> the
+    tree. Otherwise, people are gonna think I'm silly.
   CurrentState: 0
   SpawnOnAccept: []
   Validator: {fileID: 0}
@@ -3053,6 +3055,7 @@ MonoBehaviour:
     want it to look nice. Do you think you can help me?"
   QuestAcceptedDialogue: "That\u2019s great! Really great! Okay, what we need is
     <em>soft</em> items for the nursery nest. Can you find about <em>3</em> things?"
+  ItemToGive: {fileID: 0}
   QuestDescription: Find 3 items that might be soft enough for a baby bird nest!
     Bring them back and construct the nest for the client.
   QuestRejectedDialogue: "Oh\u2026well alright\u2026 If you change your mind, please
