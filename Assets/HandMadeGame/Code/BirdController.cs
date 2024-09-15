@@ -35,8 +35,11 @@ public class BirdController : MonoBehaviour
     // utility for flying speed
     private float horizontalMove = 0.0f;
 
-    // utility for stopping tilt
+    // utility for stopping tilt & hovering
     public float tiltSmooth = 0.3f;
+    private float sinCount = 0f;
+    private Vector3 startingPos = Vector3.zero;
+    public bool hovering = true;
 
     // Start is called before the first frame update
     void Start()
@@ -94,7 +97,19 @@ public class BirdController : MonoBehaviour
         Vector3 curVelocity = rb.velocity;
         rb.velocity = Vector3.SmoothDamp(rb.velocity, targetVelocity, ref zeroVec, moveSmoothing);
         // make numbers nicer
-        if (rb.velocity.magnitude < .01) rb.velocity = Vector3.zero;
+        if (rb.velocity.magnitude < .01){
+            if (startingPos == Vector3.zero) {
+                startingPos = this.transform.position;
+            }
+            hovering = true;
+            rb.velocity = Vector3.zero;
+            sinCount = sinCount + 0.01f;
+            this.transform.position = new Vector3(startingPos.x, startingPos.y + (Mathf.Sin(sinCount) / 15), startingPos.z);
+        } else {
+            sinCount = 0;
+            startingPos = Vector3.zero;
+            hovering = false;
+        }
         // check if decelerating to tilt model down
         if (horizontalMove == 0 && rb.velocity.magnitude != 0) {
             Quaternion target = Quaternion.Euler(-15, 0, 0);
@@ -103,5 +118,9 @@ public class BirdController : MonoBehaviour
             Quaternion target = Quaternion.Euler(0, 0, 0);
             model.rotation = Quaternion.Slerp(model.rotation, target, tiltSmooth);
         }
+    }
+
+    public bool GetHovering() {
+        return hovering;
     }
 }

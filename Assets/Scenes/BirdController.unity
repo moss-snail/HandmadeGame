@@ -263,6 +263,7 @@ MonoBehaviour:
   model: {fileID: 40285086}
   animModel: {fileID: 331490182}
   tiltSmooth: 0.01
+  hovering: 1
 --- !u!135 &128486672
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1177,8 +1178,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9d44dc315e4fd4fafc0c18d9c17e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bird: {fileID: 128486671}
   target: {fileID: 128486670}
   smoothTime: 0.3
+  lookSmoothTime: 4
 --- !u!1 &1302907067
 GameObject:
   m_ObjectHideFlags: 0
