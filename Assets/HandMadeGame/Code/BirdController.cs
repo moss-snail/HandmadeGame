@@ -73,9 +73,8 @@ public class BirdController : MonoBehaviour
         lastMousePositionX = newPositionX;
         lastMousePositionY = newPositionY;
 
-        newX -= 1000 * Time.deltaTime * speed * deltaX;
+        newX += 1000 * Time.deltaTime * speed * deltaX;
         newY -= 50 * Time.deltaTime * speed * deltaY;
-        Debug.Log(new Vector2(newX, newY));
 
         // hide cursor again when clicking into game again
         // WILL NEED TO CHANGE THIS! to show cursor when decorating nest
