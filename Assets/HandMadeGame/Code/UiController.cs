@@ -38,6 +38,7 @@ public static class UiController
 
     public static string ProcessDisplayString(string text)
         => text
+        .Trim()
         .Replace("<em>", "<color=#fee761>")
         .Replace("</em>", "</color>")
         .Replace('’', '\'')

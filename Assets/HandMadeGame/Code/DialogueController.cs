@@ -14,6 +14,10 @@ public sealed class DialogueController : MonoBehaviour
     private Action YesAction;
     private Action NoAction;
     private Action AdvanceAction;
+    private bool ButtonsAreVisible = false;
+
+    private string RemainingText;
+    private bool ShowButtonsForFinalText;
 
     private static Action NoOp = () => { };
 
@@ -27,17 +31,24 @@ public sealed class DialogueController : MonoBehaviour
     }
 
     private bool _DialogueWasJustShown = false;
-    private void ShowDialogue(Sprite portrait, string message, bool showButtons, string yesText = "Yes", string noText = "No")
+    private void ShowDialogue(Sprite portrait, string message, bool showButtons)
     {
+        // Check if the message contains a split. If it does then this will be an interim dialogue box with the remainder deferred
+        const string messageSplit = "###";
+        int messageSplitIndex = message.IndexOf(messageSplit);
+        if (messageSplitIndex >= 0)
+        {
+            Debug.Assert(RemainingText == null);
+            RemainingText = message.Substring(messageSplitIndex + messageSplit.Length);
+            message = message.Substring(0, messageSplitIndex);
+            ShowButtonsForFinalText = showButtons;
+            showButtons = false;
+        }
+
         Portrait.sprite = portrait;
         DialogueText.text = UiController.ProcessDisplayString(message);
 
-        if (showButtons)
-        {
-            YesText.text = yesText;
-            NoText.text = noText;
-        }
-
+        ButtonsAreVisible = showButtons;
         YesButton.gameObject.SetActive(showButtons);
         NoButton.gameObject.SetActive(showButtons);
 
@@ -60,21 +71,19 @@ public sealed class DialogueController : MonoBehaviour
     public void ShowDialogue(Sprite portrait, string message)
         => ShowDialogue(portrait, message, NoOp);
 
-    public void ShowDialogue(Sprite portrait, string message, Action yesAction, Action noAction)
+    public void ShowDialogue(Sprite portrait, string message, string yesText, Action yesAction, string noText, Action noAction)
     {
+        YesText.text = yesText;
+        NoText.text = noText;
+
         YesAction = yesAction;
         NoAction = noAction;
         AdvanceAction = null;
         ShowDialogue(portrait, message, true);
     }
 
-    public void ShowDialogue(Sprite portrait, string message, string yesText, Action yesAction, string noText, Action noAction)
-    {
-        YesAction = yesAction;
-        NoAction = noAction;
-        AdvanceAction = null;
-        ShowDialogue(portrait, message, true, yesText, noText);
-    }
+    public void ShowDialogue(Sprite portrait, string message, Action yesAction, Action noAction)
+        => ShowDialogue(portrait, message, "Yes", yesAction, "No", noAction);
 
     private void HandleAction(Action action)
     {
@@ -91,10 +100,21 @@ public sealed class DialogueController : MonoBehaviour
 
     private void Update()
     {
-        if (gameObject.activeInHierarchy && AdvanceAction != null)
+        if (gameObject.activeInHierarchy && !ButtonsAreVisible)
         {
             if (UiController.CheckGlobalDismiss())
-                HandleAction(AdvanceAction);
+            {
+                if (RemainingText == null)
+                {
+                    HandleAction(AdvanceAction);
+                }
+                else
+                {
+                    string text = RemainingText;
+                    RemainingText = null;
+                    ShowDialogue(Portrait.sprite, text, ShowButtonsForFinalText);
+                }
+            }
         }
     }
 }
