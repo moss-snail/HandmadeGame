@@ -9,14 +9,15 @@ public sealed class GameFlow : MonoBehaviour
     [HideInInspector]
     public List<NestItem> Inventory = new();
     public int Reputation;
+    public int WinReputation = 3;
 
     public DialogueController DialogueController;
+    public InfoPopupController InfoPopupController;
     public ArrangementModeControllerBase ArrangementModeController;
 
     private Quest CurrentQuest;
 
     public bool ShowDebugger;
-
 
     private void Awake()
     {
@@ -32,8 +33,6 @@ public sealed class GameFlow : MonoBehaviour
 
     public void HandleInteraction(Quest quest)
     {
-        Debug.Log($"Interacting with quest '{quest.name}'");
-
         switch (quest.CurrentState)
         {
             case QuestState.NotStarted:
@@ -58,15 +57,14 @@ public sealed class GameFlow : MonoBehaviour
                     quest.CharacterPortrait,
                     quest.StartDialogue,
                     // Yes
-                    //TODO: Show quest popup somewhere
                     () => DialogueController.ShowDialogue
                     (
                         quest.CharacterPortrait,
                         quest.QuestAcceptedDialogue,
                         () =>
                         {
-                            quest.CurrentState = QuestState.Accepted;
-                            CurrentQuest = quest;
+                            InfoPopupController.ShowPopup(quest.QuestDescription);
+                            AcceptQuest(quest);
                         }),
                     () => DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestRejectedDialogue)
                 );
@@ -86,7 +84,7 @@ public sealed class GameFlow : MonoBehaviour
                     (
                         quest.CharacterPortrait,
                         quest.NotReadyToBeginDialogue,
-                        () => DialogueController.ShowDialogue(quest.CharacterPortrait, "TODO: SHOW QUEST POPUP"),
+                        () => InfoPopupController.ShowPopup(quest.QuestDescription),
                         () => DialogueController.ShowDialogue(quest.CharacterPortrait, quest.NoNeedToRepeatDialogue)
                     )
                 );
@@ -101,9 +99,19 @@ public sealed class GameFlow : MonoBehaviour
         }
     }
 
+    private void AcceptQuest(Quest quest)
+    {
+        Debug.Assert(CurrentQuest == null);
+
+        quest.CurrentState = QuestState.Accepted;
+        CurrentQuest = quest;
+
+        foreach (GameObject gameObject in quest.SpawnOnAccept)
+            gameObject.SetActive(true);
+    }
+
     public void HandleInteraction(NestItem item)
     {
-        Debug.Log($"Interacting with nest item '{item.name}'");
         Inventory.Add(item);
         item.gameObject.SetActive(false);
     }
@@ -116,7 +124,7 @@ public sealed class GameFlow : MonoBehaviour
         PuzzleOutcome outcome = quest.Validator.CheckPuzzle(quest);
         switch (outcome)
         {
-            case PuzzleOutcome.Perfect: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestCompleteDialogue); break;
+            case PuzzleOutcome.Perfect: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.QuestCompleteDialogue, () => MarkQuestCompleted(quest)); break;
             case PuzzleOutcome.WrongItemsPresent: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.WrongItemsDialogue); break;
             case PuzzleOutcome.NotEnoughItems: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.NotEnoughItemsDialogue); break;
             case PuzzleOutcome.IncorrectPlacement: DialogueController.ShowDialogue(quest.CharacterPortrait, quest.WrongItemArrangementDialogue); break;
@@ -125,6 +133,27 @@ public sealed class GameFlow : MonoBehaviour
                 DialogueController.ShowDialogue(quest.CharacterPortrait, "Your decorating was so good it broke the matrix!");
                 break;
         }
+    }
+
+    private void MarkQuestCompleted(Quest quest)
+    {
+        Debug.Assert(quest == CurrentQuest);
+        Reputation++;
+        quest.CurrentState = QuestState.Completed;
+        CurrentQuest = null;
+        WinConditionCheck();
+    }
+
+    private void WinConditionCheck()
+    {
+        if (Reputation >= WinReputation)
+            InfoPopupController.ShowPopup
+            (
+                "You successfully redecorated everyone's nest!\n" +
+                "Now you're widely recognized in your park as an\n\n" +
+                "<size=130%><<em>Expert Interior Birdecorator</em>></size>\n\n" +
+                "Thanks for playing!"
+            );
     }
 
     private void OnDestroy()
@@ -141,6 +170,13 @@ public sealed class GameFlow : MonoBehaviour
         GUILayout.BeginArea(new Rect(140f, 0f, 120f, 1000f));
         GUILayout.Label($"Reputation: {Reputation}");
         GUILayout.Label($"Current quest: {(CurrentQuest == null ? "<none>" : CurrentQuest.name)}");
+
+        if (GUILayout.Button("Rep+"))
+        {
+            Reputation++;
+            WinConditionCheck();
+        }
+
         if (CurrentQuest != null)
         {
             if (GUILayout.Button("Abort quest"))
@@ -150,11 +186,7 @@ public sealed class GameFlow : MonoBehaviour
             }
 
             if (GUILayout.Button("Complete quest"))
-            {
-                Reputation++;
-                CurrentQuest.CurrentState = QuestState.Completed;
-                CurrentQuest = null;
-            }
+                MarkQuestCompleted(CurrentQuest);
         }
         GUILayout.EndArea();
     }

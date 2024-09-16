@@ -5,8 +5,6 @@ public sealed class PlayerInteraction : MonoBehaviour
 {
     public ControllerPrompt ControllerPrompt;
 
-    public const KeyCode InteractionKey = KeyCode.E;
-
     public Vector3 InteractionCenter;
     public float InteractionRadius;
     private Vector3 InteractionCenterGlobal => transform.position + InteractionCenter;
@@ -22,14 +20,14 @@ public sealed class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        DialogueController.DialogueStart += () =>
+        UiController.UiInteractionStart += () =>
         {
             Suppressed = true;
             CurrentFocus = null;
             ControllerPrompt.Hide();
         };
 
-        DialogueController.DialogueEnd += () => Suppressed = false;
+        UiController.UiInteractionEnd += () => Suppressed = false;
     }
 
     private Collider[] _Colliders = new Collider[8];
@@ -64,20 +62,20 @@ public sealed class PlayerInteraction : MonoBehaviour
             return;
 
         // If it's not a new focus and the player isn't trying to interact, we have nothing to do
-        bool interactionTriggered = Input.GetKeyDown(InteractionKey);
+        bool interactionTriggered = Input.GetKeyDown(UiController.InteractionKey);
         if (!isNewFocus && !interactionTriggered)
             return;
 
         // Either update the prompt as appropriate or handle the interaction
         if (CurrentFocus.TryGetComponent(out Quest quest))
         {
-            ControllerPrompt.Show(InteractionKey, "Talk");
+            ControllerPrompt.Show(UiController.InteractionKey, "Talk");
             if (interactionTriggered)
                 GameFlow.Instance.HandleInteraction(quest);
         }
         else if (CurrentFocus.TryGetComponent(out NestItem item))
         {
-            ControllerPrompt.Show(InteractionKey, $"Pick up {item.name}");
+            ControllerPrompt.Show(UiController.InteractionKey, $"Pick up {item.name}");
             if (interactionTriggered)
                 GameFlow.Instance.HandleInteraction(item);
         }

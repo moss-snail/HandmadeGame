@@ -41,12 +41,18 @@ public class BirdController : MonoBehaviour
     private Vector3 startingPos = Vector3.zero;
     public bool hovering = true;
 
+    // utility for mouse shtuff
+    private float lastMousePositionX;
+    private float lastMousePositionY;
+
     // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         internalMoveSpeed = moveSpeed;
+        lastMousePositionX = Input.GetAxisRaw("Mouse Y");
+        lastMousePositionY = Input.GetAxisRaw("Mouse X");
     }
 
     // Update is called once per frame
@@ -56,25 +62,19 @@ public class BirdController : MonoBehaviour
         horizontalMove = Input.GetAxisRaw("Vertical");
         if (horizontalMove < 0) horizontalMove = 0;
 
-        // check if mouse is far enough from center to look up/down
-        if (Input.mousePosition.y < Screen.height / 4) {
-            newX += 2 * speed * (Mathf.Abs(Input.mousePosition.x - Screen.height / 2) / Screen.height);
-            internalMoveSpeed = Mathf.Clamp(internalMoveSpeed + (horizontalMove * speedAdjustment), lowSpeedLimit, highSpeedLimit);
-        }
-        else if (Input.mousePosition.y > 3 * Screen.height / 4) {
-            newX -= 2 * speed * (Mathf.Abs(Input.mousePosition.x - Screen.height / 2) / Screen.height);
-            internalMoveSpeed = Mathf.Clamp(internalMoveSpeed - (horizontalMove * speedAdjustment), lowSpeedLimit, highSpeedLimit);
-        }
+        // mousePositionY corresponds to left/right and X to up/down
+        // will go back and update variable names at some point
 
-        // check if mouse is far enough from center to look left/right
-        if (Input.mousePosition.x < 8 * Screen.width / 20) {
-            newY -= speed * 2 * (Mathf.Abs(Input.mousePosition.x - Screen.width / 2) / Screen.width);
-            horizontalMove = 1; // force player to fly forward to turn
-        }
-        else if (Input.mousePosition.x > 12 * Screen.width / 20) {
-            newY += speed * 2 * (Mathf.Abs(Input.mousePosition.x - Screen.width / 2) / Screen.width);
-            horizontalMove = 1; // force player to fly forward to turn
-        }
+        // find change in mouse position
+        float newPositionX = Input.GetAxisRaw("Mouse Y");
+        float newPositionY = Input.GetAxisRaw("Mouse X");
+        float deltaX = lastMousePositionX - newPositionX;
+        float deltaY = lastMousePositionX - newPositionY;
+        lastMousePositionX = newPositionX;
+        lastMousePositionY = newPositionY;
+
+        newX += 1000 * Time.deltaTime * speed * deltaX;
+        newY -= 50 * Time.deltaTime * speed * deltaY;
 
         // hide cursor again when clicking into game again
         // WILL NEED TO CHANGE THIS! to show cursor when decorating nest

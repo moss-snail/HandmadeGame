@@ -49,5 +49,9 @@ public sealed class Quest : MonoBehaviour
             Debug.LogError($"Quest '{name}' does not have a validator!");
             Validator = gameObject.AddComponent<NullQuestValidator>();
         }
+
+        // Ensure spawn items are hidden at start
+        foreach (GameObject gameObject in SpawnOnAccept)
+            gameObject.SetActive(false);
     }
 }
